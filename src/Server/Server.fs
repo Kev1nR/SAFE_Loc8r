@@ -17,11 +17,12 @@ let port =
     "PORT"
     |> tryGetEnv |> Option.map uint16 |> Option.defaultValue 8085us
 
+let getTitle() : Task<Content> = task { return { Title = "Elmish"; ButtonLabel = "Reverse" }}
 let webApp = router {
     get "/api/init" (fun next ctx ->
         task {
-            let counter = {Value = 42}
-            return! json counter next ctx
+            let! content = getTitle()
+            return! json content next ctx
         })
 }
 
