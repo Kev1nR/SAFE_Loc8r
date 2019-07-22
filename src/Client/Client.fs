@@ -10,18 +10,20 @@ open Fulma
 open Thoth.Json
 
 open Shared
+open Views
+open Models
 
-// The model holds data that you want to keep track of while the application is running
-// in this case, we are keeping track of a counter
-// we mark it as optional, because initially it will not be available from the client
-// the initial value will be requested from server
-type Model = { Content: Content option  }
+// // The model holds data that you want to keep track of while the application is running
+// // in this case, we are keeping track of a counter
+// // we mark it as optional, because initially it will not be available from the client
+// // the initial value will be requested from server
+// type Model = { Content: Content option  }
 
-// The Msg type defines what events/actions can occur while the application is running
-// the state of the application changes *only* in reaction to these events
-type Msg =
-| Toggle
-| InitialContentLoaded of Content
+// // The Msg type defines what events/actions can occur while the application is running
+// // the state of the application changes *only* in reaction to these events
+// type Msg =
+// | Toggle
+// | InitialContentLoaded of Content
 
 let initialContent () = Fetch.fetchAs<Content> "/api/init"
 
@@ -55,49 +57,49 @@ let update (msg : Msg) (currentModel : Model) : Model * Cmd<Msg> =
         nextModel, Cmd.none
     | _ -> currentModel, Cmd.none
 
-let button txt onClick =
-    Button.button
-        [
-          Button.Color IsPrimary
-          Button.OnClick onClick ]
-        [ str txt ]
+// let button txt onClick =
+//     Button.button
+//         [
+//           Button.Color IsPrimary
+//           Button.OnClick onClick ]
+//         [ str txt ]
 
-module Views =
-    let show = function
-        | { Content = Some content } -> string content.Title
-        | { Content = None   } -> "Loading..."
+// module Views =
+//     let show = function
+//         | { Content = Some content } -> string content.Title
+//         | { Content = None   } -> "Loading..."
 
-    let showLabel = function
-        | { Content = Some content } -> string content.ButtonLabel
-        | { Content = None   } -> "Loading..."
+//     let showLabel = function
+//         | { Content = Some content } -> string content.ButtonLabel
+//         | { Content = None   } -> "Loading..."
 
-    let main (model : Model) (dispatch : Msg -> unit) (content : ReactElement list) =
-        div [ ]
-            [ Heading.h1 [ ] [ str (show model) ]
-              p [] [ str ("Welcome to " + (show model)) ]
+//     let main (model : Model) (dispatch : Msg -> unit) (content : ReactElement list) =
+//         div [ ]
+//             [ Heading.h1 [ ] [ str (show model) ]
+//               p [] [ str ("Welcome to " + (show model)) ]
 
-              Container.container []
-                  content
-            ]
+//               Container.container []
+//                   content
+//             ]
 
-    let homeView (model : Model) (dispatch : Msg -> unit) =
-        let content =  [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
-                            [ button (showLabel model) (fun _ -> dispatch Toggle) ] ]
+//     let homeView (model : Model) (dispatch : Msg -> unit) =
+//         let content =  [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+//                             [ button (showLabel model) (fun _ -> dispatch Toggle) ] ]
 
-        content |> main model dispatch
+//         content |> main model dispatch
 
-    let aboutView (model : Model) (dispatch : Msg -> unit) =
-        let content =  [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
-                            [ Heading.h3 [] [ str ( "About Elmish" ) ] ]
-                       ]
-        content |> main model dispatch
+//     let aboutView (model : Model) (dispatch : Msg -> unit) =
+//         let content =  [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+//                             [ Heading.h3 [] [ str ( "About Elmish" ) ] ]
+//                        ]
+//         content |> main model dispatch
 
 #if DEBUG
 open Elmish.Debug
 open Elmish.HMR
 #endif
 
-Program.mkProgram init update Views.homeView
+Program.mkProgram init update homeView
 #if DEBUG
 |> Program.withConsoleTrace
 #endif
