@@ -92,25 +92,6 @@ module Views =
                        ]
         content |> main model dispatch
 
-
-// let view (model : Model) (dispatch : Msg -> unit) =
-//     div []
-//         [ Navbar.navbar [ Navbar.Color IsPrimary ]
-//             [ Navbar.Item.div [ ]
-//                 [ Heading.h2 [ ]
-//                     [ str "SAFE Template" ] ] ]
-
-//           Container.container []
-//               [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
-//                     [ Heading.h3 [] [ str ("Press buttons to manipulate counter: " + show model) ] ]
-//                 Columns.columns []
-//                     [ Column.column [] [ button "-" (fun _ -> dispatch Decrement) ]
-//                       Column.column [] [ button "+" (fun _ -> dispatch Increment) ] ] ]
-
-//           Footer.footer [ ]
-//                 [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
-//                     [ safeComponents ] ] ]
-
 #if DEBUG
 open Elmish.Debug
 open Elmish.HMR
