@@ -24,6 +24,16 @@ let webApp = router {
             let! content = getTitle()
             return! json content next ctx
         })
+    get "/api/" (fun next ctx ->
+        task {
+            let! content = task { return { Title = "Home"; ButtonLabel = "Reverse Home" }}
+            return! json content next ctx
+        })
+    get "/api/about" (fun next ctx ->
+        task {
+            let! content = task { return { Title = "About"; ButtonLabel = "Reverse About" }}
+            return! json content next ctx
+        })
 }
 
 let app = application {
